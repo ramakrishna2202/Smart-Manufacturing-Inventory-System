@@ -1,6 +1,8 @@
 package com.smims.backend.service;
 
 import com.smims.backend.entity.RawMaterial;
+import com.smims.backend.exception.DuplicateResourceException;
+import com.smims.backend.exception.ResourceNotFoundException;
 import com.smims.backend.repository.RawMaterialRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +24,14 @@ public class RawMaterialService {
     public RawMaterial getRawMaterialById(Long id) {
         return rawMaterialRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Raw material not found with id: " + id));
+                        new ResourceNotFoundException(
+                                "Raw material not found with id: " + id
+                        ));
     }
 
     public RawMaterial createRawMaterial(RawMaterial rawMaterial) {
         if (rawMaterialRepository.existsByMaterialCode(rawMaterial.getMaterialCode())) {
-            throw new RuntimeException(
+            throw new DuplicateResourceException(
                     "Raw material already exists with code: "
                             + rawMaterial.getMaterialCode()
             );

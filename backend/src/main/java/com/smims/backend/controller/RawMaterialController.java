@@ -2,6 +2,7 @@ package com.smims.backend.controller;
 
 import com.smims.backend.entity.RawMaterial;
 import com.smims.backend.service.RawMaterialService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,9 @@ public class RawMaterialController {
 
     @GetMapping
     public ResponseEntity<List<RawMaterial>> getAllRawMaterials() {
-        return ResponseEntity.ok(rawMaterialService.getAllRawMaterials());
+        return ResponseEntity.ok(
+                rawMaterialService.getAllRawMaterials()
+        );
     }
 
     @GetMapping("/{id}")
@@ -34,7 +37,7 @@ public class RawMaterialController {
 
     @PostMapping
     public ResponseEntity<RawMaterial> createRawMaterial(
-            @RequestBody RawMaterial rawMaterial) {
+            @Valid @RequestBody RawMaterial rawMaterial) {
 
         RawMaterial createdMaterial =
                 rawMaterialService.createRawMaterial(rawMaterial);
@@ -47,7 +50,7 @@ public class RawMaterialController {
     @PutMapping("/{id}")
     public ResponseEntity<RawMaterial> updateRawMaterial(
             @PathVariable Long id,
-            @RequestBody RawMaterial rawMaterial) {
+            @Valid @RequestBody RawMaterial rawMaterial) {
 
         return ResponseEntity.ok(
                 rawMaterialService.updateRawMaterial(id, rawMaterial)

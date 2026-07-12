@@ -1,6 +1,9 @@
 package com.smims.backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,23 +16,34 @@ public class RawMaterial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Material code is required")
     @Column(nullable = false, unique = true)
     private String materialCode;
 
+    @NotBlank(message = "Material name is required")
     @Column(nullable = false)
     private String materialName;
 
     private String category;
 
+    @NotBlank(message = "Unit is required")
     @Column(nullable = false)
     private String unit;
 
+    @NotNull(message = "Current stock is required")
+    @DecimalMin(value = "0.0", message = "Current stock cannot be negative")
     @Column(nullable = false, precision = 15, scale = 3)
     private BigDecimal currentStock;
 
+    @NotNull(message = "Minimum stock level is required")
+    @DecimalMin(
+            value = "0.0",
+            message = "Minimum stock level cannot be negative"
+    )
     @Column(nullable = false, precision = 15, scale = 3)
     private BigDecimal minimumStockLevel;
 
+    @DecimalMin(value = "0.0", message = "Unit cost cannot be negative")
     @Column(precision = 15, scale = 2)
     private BigDecimal unitCost;
 
