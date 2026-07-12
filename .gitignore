@@ -1,0 +1,19 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Java / Maven
+backend/target/
+
+# Node.js / React
+frontend/node_modules/
+frontend/dist/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Operating system
+.DS_Store
+Thumbs.db
