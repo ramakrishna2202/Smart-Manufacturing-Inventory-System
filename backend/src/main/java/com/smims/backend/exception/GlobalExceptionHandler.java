@@ -47,6 +47,18 @@ public class GlobalExceptionHandler {
                 HttpStatus.CONFLICT
         );
     }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(
+            IllegalArgumentException ex) {
+
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", 400);
+        error.put("error", "Bad Request");
+        error.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(
